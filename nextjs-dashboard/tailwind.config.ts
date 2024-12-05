@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -27,6 +29,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), new MiniCssExtractPlugin()]
 };
 export default config;

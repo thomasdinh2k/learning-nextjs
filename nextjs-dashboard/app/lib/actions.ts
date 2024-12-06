@@ -1,5 +1,15 @@
 'use server';
+import { z } from 'zod';
+const FormSchema = z.object({
+  id: z.string(),
+  customerId: z.string(),
+  amount: z.coerce.number(), //The amount field is specifically set to coerce (change) from a string to a number while also validating its type.
 
+  status: z.enum(['pending', 'paid']),
+  date: z.string(),
+});
+
+const CreateInvoice = FormSchema.omit({ id: true, date: true });
 export async function createInvoice(formData: FormData) {
   console.log('creating invoices', formData);
   //   creating invoices FormData {
@@ -16,9 +26,11 @@ export async function createInvoice(formData: FormData) {
   //   };
 
   // ---> Using entries to quickly get all entries
-  const rawFormData = Object.fromEntries(formData.entries());
-  console.log(
-    '🪳 ~ file: actions.ts:16 ~ createInvoice ~ rawFormData||',
-    rawFormData,
+  const rawFormData = CreateInvoice.parse(
+    Object.fromEntries(formData.entries()),
   );
+
+  const { customerId, amount, status } = rawFormData;
+  const amountInCents = amount * 1000;
+  const date = new Date().toISOString().split('T')[0];
 }

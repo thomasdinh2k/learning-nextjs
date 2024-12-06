@@ -8,6 +8,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const pathName = usePathname();
   const { replace } = useRouter();
   const handleSearch = (term: string) => {
+    console.log('🪳 ~ file: search.tsx:11 ~ handleSearch ~ term||', term);
+
     const params = new URLSearchParams(searchParams)
     if (term) {
       params.set('query', term)

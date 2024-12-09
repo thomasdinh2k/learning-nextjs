@@ -18,12 +18,6 @@ export default async function Page(props: {
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchInvoicesPages(query);
 
-  console.log("pagination queries", {
-    searchParams,
-    query,
-    currentPage,
-    totalPages
-  })
 
   return (
     <div className="w-full">
